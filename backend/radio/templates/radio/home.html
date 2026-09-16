@@ -1,0 +1,2906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GramoBaksho</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Serif+Bengali:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#140d0a;
+  --bg2:#28170e;
+  --cream:#f7efe1;
+  --muted:rgba(247,239,225,.58);
+  --line:rgba(247,239,225,.14);
+  --accent:#f2b83f;
+  --accent2:#e56b3b;
+  --panel:rgba(50,25,12,.78);
+  --panel2:rgba(28,16,11,.92);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,
+body{
+  width:100%;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--cream);
+}
+
+body{
+  font-family:Manrope,system-ui,sans-serif;
+  overflow:hidden;
+}
+
+button,
+input{
+  font:inherit;
+}
+
+button{
+  color:inherit;
+}
+
+/* --------------------------------------------------
+   CINEMATIC BACKGROUND
+-------------------------------------------------- */
+
+.radio-page{
+  position:relative;
+  height:100vh;
+  min-height:640px;
+  overflow:hidden;
+  isolation:isolate;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 38%,
+      rgba(235,132,65,.26),
+      transparent 43%
+    ),
+    radial-gradient(
+      ellipse at 50% 78%,
+      rgba(87,38,15,.7),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      #170e0b 0%,
+      #26160f 48%,
+      #120b08 100%
+    );
+}
+
+.radio-page::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-3;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(11,7,5,.08),
+      rgba(11,7,5,.72)
+    ),
+    repeating-linear-gradient(
+      166deg,
+      transparent 0 96px,
+      rgba(255,255,255,.035) 97px 98px,
+      transparent 99px 155px
+    );
+
+  opacity:.85;
+  animation:roadDrift 18s linear infinite;
+}
+
+.radio-page::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(255,255,255,.06) 0 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 77% 22%,
+      rgba(255,255,255,.05) 0 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 42% 68%,
+      rgba(255,255,255,.045) 0 1px,
+      transparent 2px
+    );
+
+  background-size:
+    170px 170px,
+    220px 220px,
+    190px 190px;
+
+  animation:dust 22s linear infinite;
+}
+
+@keyframes roadDrift{
+  from{transform:translateY(0)}
+  to{transform:translateY(42px)}
+}
+
+@keyframes dust{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(32px,-24px,0)}
+}
+
+.grain{
+  position:absolute;
+  inset:-50%;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.09;
+
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.38'/%3E%3C/svg%3E");
+
+  animation:grain 0.5s steps(2) infinite;
+}
+
+@keyframes grain{
+  0%{transform:translate(0,0)}
+  25%{transform:translate(2%,1%)}
+  50%{transform:translate(-1%,2%)}
+  75%{transform:translate(1%,-1%)}
+  100%{transform:translate(-2%,0)}
+}
+
+/* --------------------------------------------------
+   HORIZON
+-------------------------------------------------- */
+
+.horizon{
+  position:absolute;
+  left:-5%;
+  right:-5%;
+  bottom:23%;
+  height:36%;
+  z-index:-1;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1b120e 0 18%,
+      transparent 18% 100%
+    );
+
+  clip-path:polygon(
+    0 63%,
+    12% 52%,
+    22% 61%,
+    33% 43%,
+    45% 57%,
+    57% 39%,
+    70% 56%,
+    83% 44%,
+    100% 59%,
+    100% 100%,
+    0 100%
+  );
+
+  opacity:.95;
+}
+
+/* --------------------------------------------------
+   TOP BAR
+-------------------------------------------------- */
+
+.topbar{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:10;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+
+  padding:30px 42px;
+}
+
+.brand{
+  display:flex;
+  align-items:flex-start;
+  text-decoration:none;
+}
+
+.brand-copy strong{
+  display:block;
+  color:#f3efe8;
+  font-size:19px;
+  font-weight:700;
+  letter-spacing:-.035em;
+  line-height:1;
+}
+
+.brand-copy span{
+  display:block;
+  margin-top:8px;
+  color:rgba(243,239,232,.46);
+  font-size:8.5px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  font-weight:600;
+}
+
+.clock-wrap{
+  text-align:right;
+}
+
+.clock{
+  font-size:25px;
+  line-height:1;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.03em;
+}
+
+.clock span{
+  font-size:12px;
+  color:var(--muted);
+  margin-left:4px;
+}
+
+.date-line{
+  margin-top:7px;
+  font-size:7.5px;
+  color:var(--muted);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+
+/* --------------------------------------------------
+   MAIN STAGE
+-------------------------------------------------- */
+
+.stage{
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:100px 28px 180px;
+}
+
+.stage-inner{
+  position:relative;
+  width:min(1100px,100%);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.status-line{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  margin-bottom:10px;
+
+  color:var(--muted);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.42em;
+  text-transform:uppercase;
+}
+
+.status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+
+  background:#ef6045;
+  box-shadow:0 0 13px #ef6045;
+
+  animation:livePulse 1.35s ease-in-out infinite;
+}
+
+@keyframes livePulse{
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+  50%{
+    opacity:.35;
+    transform:scale(.78);
+  }
+}
+
+.hero-title{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:clamp(84px,12vw,178px);
+  line-height:.84;
+  font-weight:800;
+  letter-spacing:-.06em;
+
+  color:#fbf7f0;
+
+  text-shadow:
+    0 18px 40px rgba(0,0,0,.45);
+
+  user-select:none;
+}
+
+.hero-title-en{
+  margin-top:18px;
+
+  font-size:9.5px;
+  color:rgba(247,239,225,.5);
+  letter-spacing:.62em;
+  text-transform:uppercase;
+
+  padding-left:.62em;
+}
+
+.radio-art{
+  position:absolute;
+  width:min(700px,75vw);
+  top:120px;
+  z-index:-1;
+
+  opacity:.96;
+
+  filter:
+    drop-shadow(
+      0 28px 38px rgba(0,0,0,.42)
+    );
+
+  animation:floatRadio 5s ease-in-out infinite;
+}
+
+@keyframes floatRadio{
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-7px);
+  }
+}
+
+.radio-art .dial{
+  transform-origin:300px 270px;
+  transition:transform .2s ease;
+}
+
+.radio-page.playing .radio-art .dial{
+  animation:tuning 2.6s ease-in-out infinite;
+}
+
+@keyframes tuning{
+  0%,100%{
+    transform:rotate(-8deg);
+  }
+
+  50%{
+    transform:rotate(8deg);
+  }
+}
+
+.broadcast-note{
+  margin-top:230px;
+  color:rgba(247,239,225,.68);
+  font-size:10px;
+  letter-spacing:.36em;
+  text-transform:uppercase;
+}
+
+/* --------------------------------------------------
+   CORNER NOTE
+-------------------------------------------------- */
+
+.corner-note{
+  position:absolute;
+  left:0;
+  bottom:122px;
+
+  padding:11px 14px;
+
+  border:1px solid var(--line);
+
+  background:rgba(14,9,7,.3);
+
+  backdrop-filter:blur(8px);
+
+  color:var(--muted);
+
+  font-size:9px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+
+/* --------------------------------------------------
+   PLAYER
+-------------------------------------------------- */
+
+.player-shell{
+  position:absolute;
+  left:50%;
+  bottom:34px;
+
+  transform:translateX(-50%);
+
+  z-index:20;
+
+  width:min(
+    630px,
+    calc(100vw - 32px)
+  );
+}
+
+.player{
+  min-height:76px;
+
+  display:grid;
+  grid-template-columns:minmax(190px,1fr) auto auto;
+
+  align-items:center;
+
+  gap:16px;
+
+  padding:9px 12px;
+
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:26px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.14),
+      rgba(255,255,255,.07)
+    ),
+    rgba(24,18,15,.26);
+
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.34),
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -1px 0 rgba(0,0,0,.18);
+
+  backdrop-filter:blur(26px) saturate(155%);
+  -webkit-backdrop-filter:blur(26px) saturate(155%);
+
+  transition:
+    box-shadow .3s ease,
+    border-color .3s ease,
+    background .3s ease;
+}
+
+.player.is-playing{
+  border-color:rgba(255,255,255,.25);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.17),
+      rgba(255,255,255,.08)
+    ),
+    rgba(24,18,15,.30);
+
+  box-shadow:
+    0 20px 55px rgba(0,0,0,.38),
+    0 0 36px rgba(242,184,63,.07),
+    inset 0 1px 0 rgba(255,255,255,.2);
+}
+
+.now{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+
+.cover{
+  width:48px;
+  height:48px;
+
+  flex:0 0 48px;
+
+  border-radius:50%;
+
+  object-fit:cover;
+
+  background:#32180b;
+
+  border:1px solid rgba(255,255,255,.28);
+
+  box-shadow:
+    0 5px 16px rgba(0,0,0,.28);
+
+  animation:coverSpin 12s linear infinite;
+  animation-play-state:paused;
+}
+
+.player.is-playing .cover{
+  animation-play-state:running;
+}
+
+@keyframes coverSpin{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.track-block{
+  min-width:0;
+}
+
+.track-name{
+  font-size:13px;
+  font-weight:700;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.track-artist{
+  margin-top:2px;
+
+  color:var(--muted);
+
+  font-size:11px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.progress-row{
+  display:flex;
+  align-items:center;
+
+  gap:6px;
+
+  margin-top:7px;
+
+  font-size:9px;
+
+  color:rgba(247,239,225,.48);
+
+  font-variant-numeric:tabular-nums;
+}
+
+.progress-track{
+  height:2px;
+  flex:1;
+
+  border-radius:99px;
+
+  background:rgba(255,255,255,.15);
+
+  overflow:hidden;
+
+  cursor:pointer;
+}
+
+.progress-fill{
+  width:0%;
+  height:100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--accent2),
+      var(--accent)
+    );
+
+  transition:width .25s linear;
+}
+
+.controls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+
+.control{
+  width:30px;
+  height:30px;
+
+  border:0;
+  background:none;
+
+  border-radius:50%;
+
+  display:grid;
+  place-items:center;
+
+  cursor:pointer;
+
+  color:rgba(247,239,225,.88);
+
+  transition:
+    transform .15s ease,
+    color .15s ease,
+    background .15s ease;
+}
+
+.control:hover{
+  color:#fff;
+  transform:translateY(-1px);
+}
+
+.control:active{
+  transform:scale(.95);
+}
+
+.control svg{
+  width:14px;
+  height:14px;
+}
+
+.play{
+  width:40px;
+  height:40px;
+
+  background:rgba(255,255,255,.94);
+  color:#26150d;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.22);
+}
+
+.play:hover{
+  background:#fff;
+  color:#26150d;
+  transform:scale(1.035);
+}
+
+.play svg{
+  width:16px;
+  height:16px;
+}
+
+.extra{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:10px;
+}
+
+.live-pill{
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  padding:6px 9px;
+
+  border:1px solid var(--line);
+  border-radius:99px;
+
+  font-size:8px;
+  letter-spacing:.16em;
+
+  color:var(--muted);
+
+  text-transform:uppercase;
+}
+
+.live-pill b{
+  display:block;
+
+  width:5px;
+  height:5px;
+
+  border-radius:50%;
+
+  background:#ef6045;
+}
+
+.volume{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.volume button{
+  border:0;
+  background:none;
+
+  cursor:pointer;
+
+  color:var(--muted);
+
+  display:grid;
+  place-items:center;
+}
+
+.volume svg{
+  width:16px;
+  height:16px;
+}
+
+.volume input{
+  width:54px;
+  accent-color:var(--accent);
+}
+
+.shortcut-row{
+  display:none;
+
+  justify-content:center;
+
+  gap:18px;
+
+  margin-top:12px;
+
+  color:rgba(247,239,225,.39);
+
+  font-size:9px;
+  letter-spacing:.13em;
+
+  text-transform:uppercase;
+}
+
+.shortcut-row kbd{
+  display:inline-grid;
+  place-items:center;
+
+  min-width:18px;
+  height:18px;
+
+  padding:0 4px;
+
+  margin-right:5px;
+
+  border:1px solid rgba(247,239,225,.16);
+  border-radius:5px;
+
+  color:rgba(247,239,225,.55);
+
+  font-size:8px;
+}
+
+/* --------------------------------------------------
+   FOOTER
+-------------------------------------------------- */
+
+.site-footer{
+  position:fixed;
+
+  left:50%;
+  bottom:10px;
+
+  transform:translateX(-50%);
+
+  z-index:50;
+
+  display:flex;
+  align-items:center;
+
+  gap:12px;
+
+  font-family:Manrope,system-ui,sans-serif;
+
+  font-size:8px;
+  font-weight:400;
+
+  letter-spacing:.03em;
+
+  color:rgba(247,239,225,.42);
+
+  white-space:nowrap;
+
+  pointer-events:none;
+}
+
+.site-footer span + span::before{
+  content:"•";
+
+  margin-right:12px;
+
+  color:rgba(247,239,225,.20);
+}
+
+/* --------------------------------------------------
+   MOBILE
+-------------------------------------------------- */
+
+@media(max-width:850px){
+
+  body{
+    overflow:auto;
+  }
+
+  .radio-page{
+    height:100svh;
+    min-height:720px;
+    overflow:hidden;
+  }
+
+  .topbar{
+    padding:22px 20px;
+  }
+
+  .brand-copy span{
+    letter-spacing:.2em;
+  }
+
+  .clock{
+    font-size:20px;
+  }
+
+  .stage{
+    padding:100px 18px 180px;
+  }
+
+  .hero-title{
+    font-size:clamp(
+      64px,
+      18vw,
+      120px
+    );
+  }
+
+  .radio-art{
+    width:min(
+      620px,
+      100vw
+    );
+
+    top:135px;
+  }
+
+  .broadcast-note{
+    margin-top:205px;
+  }
+
+  .player-shell{
+    bottom:18px;
+    width:calc(100vw - 20px);
+  }
+
+  .player{
+    grid-template-columns:minmax(0,1fr) auto auto;
+
+    gap:8px;
+
+    padding:9px 10px;
+
+    border-radius:24px;
+  }
+
+  .now{
+    grid-column:auto;
+  }
+
+  .controls{
+    justify-content:center;
+  }
+
+  .extra{
+    justify-content:flex-end;
+  }
+}
+
+@media(max-width:560px){
+
+  .brand-copy strong{
+    font-size:16px;
+  }
+
+  .date-line{
+    display:none;
+  }
+
+  .clock-wrap{
+    padding-top:4px;
+  }
+
+  .corner-note{
+    display:none;
+  }
+
+  .broadcast-note{
+    font-size:8px;
+    letter-spacing:.24em;
+  }
+
+  .cover{
+    width:44px;
+    height:44px;
+    flex-basis:44px;
+  }
+
+  .track-name{
+    font-size:14px;
+  }
+
+  .extra .live-pill{
+    display:none;
+  }
+
+  .volume input{
+    display:none;
+  }
+
+  .controls{
+    gap:5px;
+  }
+
+  .control{
+    width:28px;
+    height:28px;
+  }
+
+  .play{
+    width:38px;
+    height:38px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="radio-page" id="radio-page">
+
+  <div class="grain"></div>
+  <div class="horizon"></div>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+
+    <a class="brand" href="#" aria-label="GramoBaksho home">
+
+      <div class="brand-copy">
+        <strong>GramoBaksho</strong>
+      </div>
+
+    </a>
+
+    <div class="clock-wrap">
+
+      <div class="clock" id="clock">
+        00:00<span>00</span>
+      </div>
+
+      <div class="date-line" id="date-line">
+        Wednesday • 16 September 2026
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- MAIN -->
+  <main class="stage">
+
+    <div class="stage-inner">
+
+      <div class="status-line">
+        <span class="status-dot"></span>
+        <span>GramoBaksho</span>
+      </div>
+
+      <h1 class="hero-title">
+        গ্রামোবাক্স
+      </h1>
+
+      <div class="hero-title-en">
+        TRIBUTE TO THE GOLDEN ERA OF BANGLADESHI RADIO
+      </div>
+
+      <!-- RADIO ART -->
+      <div class="radio-art" aria-hidden="true">
+
+        <svg
+          viewBox="0 0 600 480"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+
+          <defs>
+
+            <radialGradient
+              id="radioGlow"
+              cx="50%"
+              cy="45%"
+              r="60%"
+            >
+              <stop
+                offset="0%"
+                stop-color="#f4c869"
+                stop-opacity=".25"
+              />
+
+              <stop
+                offset="100%"
+                stop-color="#f4c869"
+                stop-opacity="0"
+              />
+            </radialGradient>
+
+            <linearGradient
+              id="radioBody"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+            >
+              <stop
+                offset="0%"
+                stop-color="#b73730"
+              />
+
+              <stop
+                offset="100%"
+                stop-color="#5e201b"
+              />
+            </linearGradient>
+
+            <linearGradient
+              id="radioPanel"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="1"
+            >
+              <stop
+                offset="0%"
+                stop-color="#236b61"
+              />
+
+              <stop
+                offset="100%"
+                stop-color="#123b38"
+              />
+            </linearGradient>
+
+            <filter id="softShadow">
+
+              <feDropShadow
+                dx="0"
+                dy="26"
+                stdDeviation="22"
+                flood-color="#000"
+                flood-opacity=".42"
+              />
+
+            </filter>
+
+          </defs>
+
+          <ellipse
+            cx="300"
+            cy="280"
+            rx="250"
+            ry="210"
+            fill="url(#radioGlow)"
+          />
+
+          <g filter="url(#softShadow)">
+
+            <line
+              x1="430"
+              y1="150"
+              x2="470"
+              y2="55"
+              stroke="#f2b83f"
+              stroke-width="4"
+              stroke-linecap="round"
+            />
+
+            <circle
+              cx="470"
+              cy="55"
+              r="6"
+              fill="#f7cf72"
+            />
+
+            <path
+              d="M220 140 Q300 70 380 140"
+              fill="none"
+              stroke="#f2b83f"
+              stroke-width="6"
+              stroke-linecap="round"
+            />
+
+            <rect
+              x="110"
+              y="130"
+              width="380"
+              height="270"
+              rx="30"
+              fill="url(#radioBody)"
+              stroke="#3c150f"
+              stroke-width="5"
+            />
+
+            <rect
+              x="140"
+              y="175"
+              width="320"
+              height="195"
+              rx="20"
+              fill="url(#radioPanel)"
+              stroke="#0e2826"
+              stroke-width="3"
+            />
+
+            <rect
+              x="165"
+              y="194"
+              width="270"
+              height="42"
+              rx="12"
+              fill="#24140e"
+              stroke="#dba744"
+              stroke-width="2"
+            />
+
+            <g fill="#efe2c2" opacity=".52">
+
+              <rect x="180" y="211" width="2" height="10"/>
+              <rect x="206" y="211" width="2" height="10"/>
+              <rect x="232" y="208" width="2" height="13"/>
+              <rect x="258" y="211" width="2" height="10"/>
+              <rect x="284" y="206" width="2" height="15"/>
+              <rect x="310" y="211" width="2" height="10"/>
+              <rect x="336" y="208" width="2" height="13"/>
+              <rect x="362" y="211" width="2" height="10"/>
+              <rect x="388" y="211" width="2" height="10"/>
+              <rect x="414" y="211" width="2" height="10"/>
+
+            </g>
+
+            <g class="dial">
+
+              <circle
+                cx="300"
+                cy="295"
+                r="66"
+                fill="#dfa936"
+                stroke="#f7cf72"
+                stroke-width="3"
+              />
+
+              <circle
+                cx="300"
+                cy="295"
+                r="53"
+                fill="#b97827"
+                opacity=".24"
+              />
+
+              <g
+                stroke="#63301a"
+                stroke-width="2"
+                opacity=".56"
+              >
+
+                <line x1="300" y1="295" x2="300" y2="238"/>
+                <line x1="300" y1="295" x2="340" y2="252"/>
+                <line x1="300" y1="295" x2="355" y2="295"/>
+                <line x1="300" y1="295" x2="340" y2="338"/>
+                <line x1="300" y1="295" x2="300" y2="352"/>
+                <line x1="300" y1="295" x2="260" y2="338"/>
+                <line x1="300" y1="295" x2="245" y2="295"/>
+                <line x1="300" y1="295" x2="260" y2="252"/>
+
+              </g>
+
+              <circle
+                cx="300"
+                cy="295"
+                r="9"
+                fill="#5c2318"
+              />
+
+            </g>
+
+            <rect
+              x="168"
+              y="346"
+              width="264"
+              height="11"
+              rx="5"
+              fill="#0d302d"
+            />
+
+            <circle
+              cx="312"
+              cy="351"
+              r="3.5"
+              fill="#f7cf72"
+            />
+
+            <circle
+              cx="165"
+              cy="385"
+              r="16"
+              fill="#dfa936"
+            />
+
+            <circle
+              cx="435"
+              cy="385"
+              r="16"
+              fill="#dfa936"
+            />
+
+          </g>
+
+        </svg>
+
+      </div>
+
+      <div class="broadcast-note">
+        Tune in • stay a while • let the songs remember for you
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- PLAYER -->
+  <section
+    class="player-shell"
+    aria-label="Music player"
+  >
+
+    <div
+      class="player"
+      id="player-bar"
+    >
+
+      <div class="now">
+
+        <img
+          class="cover"
+          id="cover"
+          src=""
+          alt="Album artwork"
+        >
+
+        <div class="track-block">
+
+          <div
+            class="track-name"
+            id="track-title"
+          >
+            GramoBaksho Radio
+          </div>
+
+          <div
+            class="track-artist"
+            id="track-artist"
+          >
+            Loading playlist...
+          </div>
+
+          <div class="progress-row">
+
+            <span id="elapsed">
+              0:00
+            </span>
+
+            <div
+              class="progress-track"
+              id="progress-track"
+              role="slider"
+              tabindex="0"
+              aria-label="Playback progress"
+            >
+
+              <div
+                class="progress-fill"
+                id="progress-fill"
+              ></div>
+
+            </div>
+
+            <span id="duration">
+              0:00
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="controls">
+
+        <!-- PREVIOUS -->
+        <button
+          class="control"
+          onclick="prevTrack()"
+          aria-label="Previous track"
+          type="button"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M6 6h2v12H6zm3.5 6L18 18V6z"/>
+          </svg>
+
+        </button>
+
+        <!-- PLAY / PAUSE -->
+        <button
+          class="control play"
+          id="play-pause"
+          onclick="togglePlay()"
+          aria-label="Play or pause"
+          type="button"
+        >
+
+          <svg
+            id="icon-play"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+
+          <svg
+            id="icon-pause"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            style="display:none"
+          >
+            <path d="M7 5h4v14H7zM13 5h4v14h-4z"/>
+          </svg>
+
+        </button>
+
+        <!-- NEXT -->
+        <button
+          class="control"
+          onclick="nextTrack()"
+          aria-label="Next track"
+          type="button"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M16 6h2v12h-2zM6 6l8.5 6L6 18z"/>
+          </svg>
+
+        </button>
+
+      </div>
+
+      <div class="extra">
+
+        <div class="live-pill">
+
+          <b></b>
+
+          <span id="live-text">
+            Off air
+          </span>
+
+        </div>
+
+        <div class="volume">
+
+          <button
+            onclick="toggleMute()"
+            aria-label="Mute or unmute"
+            type="button"
+          >
+
+            <svg
+              id="volume-icon"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M4 9v6h4l5 5V4L8 9zm11.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/>
+            </svg>
+
+          </button>
+
+          <input
+            id="volume"
+            type="range"
+            min="0"
+            max="100"
+            value="70"
+            oninput="setVolume(this.value)"
+            aria-label="Volume"
+          >
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="shortcut-row">
+
+      <span>
+        <kbd>Space</kbd>
+        play / pause
+      </span>
+
+      <span>
+        <kbd>←</kbd>
+        <kbd>→</kbd>
+        seek
+      </span>
+
+      <span>
+        <kbd>N</kbd>
+        <kbd>P</kbd>
+        track
+      </span>
+
+      <span>
+        <kbd>M</kbd>
+        mute
+      </span>
+
+    </div>
+
+  </section>
+
+  <!-- HIDDEN YOUTUBE PLAYER -->
+  <div
+    id="yt-player"
+    style="
+      position:absolute;
+      left:-9999px;
+      top:-9999px;
+      width:200px;
+      height:113px;
+    "
+  ></div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <span>© 2026 GramoBaksho</span>
+</footer>
+
+
+<script>
+
+/* ==================================================
+   CONFIG
+================================================== */
+
+const PLAYLIST_ID = "PLPYOh7FjFqSM";
+
+
+/* ==================================================
+   PLAYER VARIABLES
+================================================== */
+
+let player = null;
+
+let isPlaying = false;
+let isMuted = false;
+
+let lastVolume = 70;
+
+let progressInterval = null;
+
+
+/*
+   Playlist data
+*/
+let playlist = [];
+
+let shuffleOrder = [];
+
+let shufflePosition = -1;
+
+let playlistReady = false;
+
+let playlistLoading = false;
+
+
+/* ==================================================
+   FALLBACK COVER
+================================================== */
+
+const fallbackCover =
+  "data:image/svg+xml;charset=UTF-8," +
+  encodeURIComponent(`
+
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="180"
+      height="180"
+      viewBox="0 0 180 180"
+    >
+
+      <defs>
+
+        <linearGradient
+          id="g"
+          x1="0"
+          y1="0"
+          x2="1"
+          y2="1"
+        >
+
+          <stop
+            stop-color="#8f3228"
+          />
+
+          <stop
+            offset="1"
+            stop-color="#e5a83b"
+          />
+
+        </linearGradient>
+
+      </defs>
+
+      <rect
+        width="180"
+        height="180"
+        rx="90"
+        fill="url(#g)"
+      />
+
+      <circle
+        cx="90"
+        cy="90"
+        r="53"
+        fill="#23120c"
+        opacity=".88"
+      />
+
+      <circle
+        cx="90"
+        cy="90"
+        r="8"
+        fill="#f7d171"
+      />
+
+    </svg>
+
+  `);
+
+document.getElementById('cover').src = fallbackCover;
+
+
+/* ==================================================
+   CLOCK
+================================================== */
+
+function updateClock(){
+
+  const now = new Date();
+
+  const time =
+    new Intl.DateTimeFormat(
+      'en-GB',
+      {
+        hour:'2-digit',
+        minute:'2-digit',
+        second:'2-digit',
+        hour12:false,
+        timeZone:'Asia/Dhaka'
+      }
+    ).formatToParts(now);
+
+  const get = type =>
+    time.find(
+      x => x.type === type
+    )?.value || '';
+
+  document.getElementById('clock').innerHTML =
+    `${get('hour')}:${get('minute')}<span>${get('second')}</span>`;
+
+  document.getElementById('date-line').textContent =
+    new Intl.DateTimeFormat(
+      'en-GB',
+      {
+        weekday:'long',
+        day:'2-digit',
+        month:'long',
+        year:'numeric',
+        timeZone:'Asia/Dhaka'
+      }
+    ).format(now);
+}
+
+updateClock();
+
+setInterval(
+  updateClock,
+  1000
+);
+
+
+/* ==================================================
+   LOAD YOUTUBE API
+================================================== */
+
+function loadYouTube(){
+
+  /*
+     Prevent loading the API more than once.
+  */
+
+  if(
+    window.YT &&
+    window.YT.Player
+  ){
+
+    createYouTubePlayer();
+
+    return;
+  }
+
+  const tag =
+    document.createElement('script');
+
+  tag.src =
+    'https://www.youtube.com/iframe_api';
+
+  document.head.appendChild(tag);
+}
+
+
+/* ==================================================
+   YOUTUBE API READY
+================================================== */
+
+window.onYouTubeIframeAPIReady = function(){
+
+  createYouTubePlayer();
+
+};
+
+
+/* ==================================================
+   CREATE YOUTUBE PLAYER
+================================================== */
+
+function createYouTubePlayer(){
+
+  if(!PLAYLIST_ID){
+
+    document.getElementById(
+      'track-artist'
+    ).textContent =
+      'Edit PLAYLIST_ID in home.html';
+
+    return;
+  }
+
+  player =
+    new YT.Player(
+      'yt-player',
+      {
+
+        height:'113',
+
+        width:'200',
+
+        playerVars:{
+          listType:'playlist',
+          list:PLAYLIST_ID,
+          autoplay:0,
+          controls:0,
+          disablekb:1,
+          rel:0,
+          playsinline:1
+        },
+
+        events:{
+          onReady:onReady,
+          onStateChange:onStateChange,
+          onError:onError
+        }
+
+      }
+    );
+}
+
+
+/* ==================================================
+   PLAYER READY
+================================================== */
+
+function onReady(){
+
+  player.setVolume(
+    lastVolume
+  );
+
+  setPlayingUI(false);
+
+  /*
+     Do NOT use:
+
+     player.setShuffle(true)
+
+     because we are managing our own
+     shuffle order.
+
+     YouTube may need some time to expose
+     the playlist through getPlaylist().
+  */
+
+  waitForPlaylist();
+
+  startProgressLoop();
+}
+
+
+/* ==================================================
+   WAIT FOR PLAYLIST
+================================================== */
+
+function waitForPlaylist(attempt = 0){
+
+  if(
+    !player ||
+    typeof player.getPlaylist !== 'function'
+  ){
+
+    return;
+  }
+
+  const list =
+    player.getPlaylist();
+
+  /*
+     Playlist is ready.
+  */
+
+  if(
+    Array.isArray(list) &&
+    list.length > 0
+  ){
+
+    playlist =
+      list.slice();
+
+    playlistReady = true;
+
+    playlistLoading = false;
+
+    buildShuffleOrder();
+
+    /*
+       Show the first available track information.
+    */
+
+    updateTrackInfo();
+
+    return;
+  }
+
+  /*
+     YouTube sometimes takes a few hundred
+     milliseconds to populate the playlist.
+
+     Retry for up to about 12 seconds.
+  */
+
+  if(attempt < 40){
+
+    playlistLoading = true;
+
+    setTimeout(
+      () => waitForPlaylist(attempt + 1),
+      300
+    );
+
+    return;
+  }
+
+  playlistLoading = false;
+
+  playlistReady = false;
+
+  document.getElementById(
+    'track-artist'
+  ).textContent =
+    'Playlist could not be loaded';
+}
+
+
+/* ==================================================
+   BUILD CUSTOM SHUFFLE
+================================================== */
+
+function buildShuffleOrder(){
+
+  if(!playlist.length){
+
+    shuffleOrder = [];
+
+    shufflePosition = -1;
+
+    return;
+  }
+
+  /*
+     Start with the normal playlist indexes.
+
+     Example:
+
+     [0,1,2,3,4,5]
+  */
+
+  shuffleOrder =
+    Array.from(
+      {
+        length:playlist.length
+      },
+      (_, index) => index
+    );
+
+
+  /*
+     Fisher-Yates shuffle.
+
+     Example result:
+
+     [3,0,5,1,4,2]
+  */
+
+  for(
+    let i = shuffleOrder.length - 1;
+    i > 0;
+    i--
+  ){
+
+    const j =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
+
+    [
+      shuffleOrder[i],
+      shuffleOrder[j]
+    ] = [
+      shuffleOrder[j],
+      shuffleOrder[i]
+    ];
+  }
+
+  /*
+     No track has been played from this
+     shuffle yet.
+  */
+
+  shufflePosition = -1;
+}
+
+
+/* ==================================================
+   START RANDOM FIRST SONG
+================================================== */
+
+function startRandomSong(){
+
+  if(!player){
+
+    return;
+  }
+
+
+  /*
+     If playlist hasn't loaded yet,
+     try again shortly.
+  */
+
+  if(
+    !playlistReady ||
+    !shuffleOrder.length
+  ){
+
+    if(playlistLoading){
+
+      document.getElementById(
+        'track-artist'
+      ).textContent =
+        'Loading playlist...';
+
+      setTimeout(
+        () => {
+
+          if(
+            player &&
+            playlistReady
+          ){
+
+            startRandomSong();
+
+          }
+
+        },
+        500
+      );
+
+      return;
+    }
+
+
+    /*
+       Fallback.
+    */
+
+    player.playVideo();
+
+    return;
+  }
+
+
+  /*
+     Select a random position.
+
+     This is the important part that prevents
+     the same first song from playing every time.
+  */
+
+  shufflePosition =
+    Math.floor(
+      Math.random() *
+      shuffleOrder.length
+    );
+
+
+  const actualPlaylistIndex =
+    shuffleOrder[
+      shufflePosition
+    ];
+
+
+  /*
+     Play that actual playlist item.
+  */
+
+  player.playVideoAt(
+    actualPlaylistIndex
+  );
+}
+
+
+/* ==================================================
+   PLAY / PAUSE
+================================================== */
+
+function togglePlay(){
+
+  if(!player){
+
+    document.getElementById(
+      'track-artist'
+    ).textContent =
+      'YouTube player is still loading...';
+
+    return;
+  }
+
+
+  if(isPlaying){
+
+    player.pauseVideo();
+
+    return;
+  }
+
+
+  /*
+     Check the current YouTube state.
+
+     -1 = unstarted
+      5 = cued
+
+     On the very first play, use our
+     randomized starting position.
+  */
+
+  const state =
+    player.getPlayerState();
+
+
+  if(
+    state === YT.PlayerState.UNSTARTED ||
+    state === YT.PlayerState.CUED
+  ){
+
+    startRandomSong();
+
+  }else{
+
+    /*
+       Resume the currently selected song.
+    */
+
+    player.playVideo();
+
+  }
+}
+
+
+/* ==================================================
+   NEXT TRACK
+================================================== */
+
+function nextTrack(){
+
+  if(!player){
+
+    return;
+  }
+
+
+  /*
+     If playlist is still loading,
+     don't accidentally start YouTube's
+     default first track.
+  */
+
+  if(
+    !playlistReady ||
+    !shuffleOrder.length
+  ){
+
+    if(playlistLoading){
+
+      document.getElementById(
+        'track-artist'
+      ).textContent =
+        'Loading playlist...';
+
+      return;
+    }
+
+
+    /*
+       Last-resort fallback.
+    */
+
+    if(
+      typeof player.nextVideo === 'function'
+    ){
+
+      player.nextVideo();
+
+    }
+
+    return;
+  }
+
+
+  /*
+     Move forward through our custom
+     shuffled order.
+  */
+
+  if(
+    shufflePosition <
+    shuffleOrder.length - 1
+  ){
+
+    shufflePosition++;
+
+  }else{
+
+    /*
+       We reached the end.
+
+       Create a brand-new shuffle.
+
+       This means the next cycle gets
+       randomized again.
+    */
+
+    buildShuffleOrder();
+
+    shufflePosition = 0;
+  }
+
+
+  const actualPlaylistIndex =
+    shuffleOrder[
+      shufflePosition
+    ];
+
+
+  player.playVideoAt(
+    actualPlaylistIndex
+  );
+}
+
+
+/* ==================================================
+   PREVIOUS TRACK
+================================================== */
+
+function prevTrack(){
+
+  if(!player){
+
+    return;
+  }
+
+
+  if(
+    !playlistReady ||
+    !shuffleOrder.length
+  ){
+
+    if(
+      typeof player.previousVideo === 'function'
+    ){
+
+      player.previousVideo();
+
+    }
+
+    return;
+  }
+
+
+  /*
+     Move backwards through our
+     custom shuffle order.
+  */
+
+  if(shufflePosition > 0){
+
+    shufflePosition--;
+
+  }else{
+
+    /*
+       If we're already at the beginning,
+       wrap around to the last song.
+    */
+
+    shufflePosition =
+      shuffleOrder.length - 1;
+  }
+
+
+  const actualPlaylistIndex =
+    shuffleOrder[
+      shufflePosition
+    ];
+
+
+  player.playVideoAt(
+    actualPlaylistIndex
+  );
+}
+
+
+/* ==================================================
+   PLAYER STATE CHANGE
+================================================== */
+
+function onStateChange(event){
+
+  switch(event.data){
+
+    case YT.PlayerState.PLAYING:
+
+      isPlaying = true;
+
+      setPlayingUI(true);
+
+      /*
+         Give YouTube a moment to update
+         getVideoData().
+      */
+
+      updateTrackInfo();
+
+      setTimeout(
+        updateTrackInfo,
+        200
+      );
+
+      break;
+
+
+    case YT.PlayerState.PAUSED:
+
+      isPlaying = false;
+
+      setPlayingUI(false);
+
+      break;
+
+
+    case YT.PlayerState.CUED:
+
+      isPlaying = false;
+
+      setPlayingUI(false);
+
+      updateTrackInfo();
+
+      break;
+
+
+    case YT.PlayerState.ENDED:
+
+      /*
+         Automatically move to the next
+         shuffled song.
+      */
+
+      nextTrack();
+
+      break;
+  }
+}
+
+
+/* ==================================================
+   PLAYING UI
+================================================== */
+
+function setPlayingUI(playing){
+
+  isPlaying = playing;
+
+
+  document.getElementById(
+    'icon-play'
+  ).style.display =
+    playing
+      ? 'none'
+      : '';
+
+
+  document.getElementById(
+    'icon-pause'
+  ).style.display =
+    playing
+      ? ''
+      : 'none';
+
+
+  document.getElementById(
+    'radio-page'
+  ).classList.toggle(
+    'playing',
+    playing
+  );
+
+
+  document.getElementById(
+    'player-bar'
+  ).classList.toggle(
+    'is-playing',
+    playing
+  );
+
+
+  document.getElementById(
+    'live-text'
+  ).textContent =
+    playing
+      ? 'On air'
+      : 'Off air';
+}
+
+
+/* ==================================================
+   TRACK INFORMATION
+================================================== */
+
+function updateTrackInfo(){
+
+  if(
+    !player ||
+    typeof player.getVideoData !== 'function'
+  ){
+
+    return;
+  }
+
+
+  const data =
+    player.getVideoData();
+
+
+  if(!data){
+
+    return;
+  }
+
+
+  const title =
+    data.title ||
+    'GramoBaksho Radio';
+
+
+  const artist =
+    data.author ||
+    'GramoBaksho';
+
+
+  document.getElementById(
+    'track-title'
+  ).textContent =
+    title;
+
+
+  document.getElementById(
+    'track-artist'
+  ).textContent =
+    artist;
+
+
+  /*
+     Automatically update the artwork.
+  */
+
+  if(data.video_id){
+
+    const cover =
+      document.getElementById(
+        'cover'
+      );
+
+
+    cover.src =
+      `https://img.youtube.com/vi/${data.video_id}/hqdefault.jpg`;
+
+
+    cover.onerror =
+      function(){
+
+        cover.src =
+          `https://img.youtube.com/vi/${data.video_id}/mqdefault.jpg`;
+
+      };
+  }
+}
+
+
+/* ==================================================
+   YOUTUBE ERROR
+================================================== */
+
+function onError(event){
+
+  console.warn(
+    'YouTube player error:',
+    event.data
+  );
+
+
+  const title =
+    document.getElementById(
+      'track-title'
+    );
+
+
+  const artist =
+    document.getElementById(
+      'track-artist'
+    );
+
+
+  /*
+     2 = invalid parameter
+     5 = HTML5 player error
+     100 = video unavailable/private
+     101 = embedding disabled
+     150 = embedding disabled
+  */
+
+  if(event.data === 100){
+
+    title.textContent =
+      'Song unavailable';
+
+    artist.textContent =
+      'Skipping to next track...';
+
+
+    setTimeout(
+      nextTrack,
+      800
+    );
+
+    return;
+  }
+
+
+  if(
+    event.data === 101 ||
+    event.data === 150
+  ){
+
+    title.textContent =
+      'Song cannot be played here';
+
+    artist.textContent =
+      'Skipping to next track...';
+
+
+    setTimeout(
+      nextTrack,
+      800
+    );
+
+    return;
+  }
+
+
+  title.textContent =
+    'Broadcast unavailable';
+
+  artist.textContent =
+    'Check your YouTube playlist';
+}
+
+
+/* ==================================================
+   SEEK
+================================================== */
+
+function seek(delta){
+
+  if(
+    !player ||
+    typeof player.getCurrentTime !== 'function'
+  ){
+
+    return;
+  }
+
+
+  const current =
+    player.getCurrentTime();
+
+
+  const duration =
+    player.getDuration();
+
+
+  const target =
+    Math.max(
+      0,
+      Math.min(
+        duration || Infinity,
+        current + delta
+      )
+    );
+
+
+  player.seekTo(
+    target,
+    true
+  );
+}
+
+
+/* ==================================================
+   VOLUME
+================================================== */
+
+function setVolume(value){
+
+  value =
+    Number(value);
+
+
+  if(
+    !Number.isFinite(value)
+  ){
+
+    return;
+  }
+
+
+  value =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        value
+      )
+    );
+
+
+  lastVolume =
+    value;
+
+
+  isMuted =
+    value === 0;
+
+
+  if(
+    player &&
+    typeof player.setVolume === 'function'
+  ){
+
+    player.setVolume(
+      value
+    );
+  }
+}
+
+
+/* ==================================================
+   MUTE
+================================================== */
+
+function toggleMute(){
+
+  const slider =
+    document.getElementById(
+      'volume'
+    );
+
+
+  if(isMuted){
+
+    /*
+       Restore previous volume.
+    */
+
+    const restoreVolume =
+      lastVolume > 0
+        ? lastVolume
+        : 70;
+
+
+    isMuted = false;
+
+
+    slider.value =
+      restoreVolume;
+
+
+    setVolume(
+      restoreVolume
+    );
+
+
+  }else{
+
+    /*
+       Save current volume.
+    */
+
+    const currentVolume =
+      Number(
+        slider.value
+      );
+
+
+    if(currentVolume > 0){
+
+      lastVolume =
+        currentVolume;
+
+    }
+
+
+    isMuted = true;
+
+
+    slider.value =
+      0;
+
+
+    if(
+      player &&
+      typeof player.setVolume === 'function'
+    ){
+
+      player.setVolume(
+        0
+      );
+    }
+  }
+}
+
+
+/* ==================================================
+   PROGRESS LOOP
+================================================== */
+
+function startProgressLoop(){
+
+  clearInterval(
+    progressInterval
+  );
+
+
+  progressInterval =
+    setInterval(
+      function(){
+
+        if(
+          !player ||
+          typeof player.getCurrentTime !== 'function'
+        ){
+
+          return;
+        }
+
+
+        const current =
+          player.getCurrentTime();
+
+
+        const duration =
+          player.getDuration();
+
+
+        document.getElementById(
+          'elapsed'
+        ).textContent =
+          formatTime(
+            current
+          );
+
+
+        document.getElementById(
+          'duration'
+        ).textContent =
+          formatTime(
+            duration
+          );
+
+
+        const percentage =
+          duration > 0
+            ? Math.min(
+                100,
+                (current / duration) * 100
+              )
+            : 0;
+
+
+        document.getElementById(
+          'progress-fill'
+        ).style.width =
+          percentage + '%';
+
+
+      },
+      500
+    );
+}
+
+
+/* ==================================================
+   FORMAT TIME
+================================================== */
+
+function formatTime(seconds){
+
+  if(
+    !Number.isFinite(seconds) ||
+    seconds < 0
+  ){
+
+    seconds = 0;
+  }
+
+
+  const minutes =
+    Math.floor(
+      seconds / 60
+    );
+
+
+  const remainingSeconds =
+    Math.floor(
+      seconds % 60
+    );
+
+
+  return (
+    minutes +
+    ':' +
+    String(
+      remainingSeconds
+    ).padStart(
+      2,
+      '0'
+    )
+  );
+}
+
+
+/* ==================================================
+   PROGRESS BAR CLICK
+================================================== */
+
+document
+  .getElementById(
+    'progress-track'
+  )
+  .addEventListener(
+    'click',
+    function(event){
+
+      if(
+        !player ||
+        typeof player.getDuration !== 'function'
+      ){
+
+        return;
+      }
+
+
+      const rect =
+        event.currentTarget
+          .getBoundingClientRect();
+
+
+      const ratio =
+        Math.min(
+          1,
+          Math.max(
+            0,
+            (
+              event.clientX -
+              rect.left
+            ) /
+            rect.width
+          )
+        );
+
+
+      const duration =
+        player.getDuration();
+
+
+      if(duration > 0){
+
+        player.seekTo(
+          ratio * duration,
+          true
+        );
+      }
+    }
+  );
+
+
+/* ==================================================
+   KEYBOARD CONTROLS
+================================================== */
+
+document.addEventListener(
+  'keydown',
+  function(event){
+
+    /*
+       Don't trigger player controls while
+       typing into an input.
+    */
+
+    if(
+      event.target.tagName === 'INPUT' ||
+      event.target.tagName === 'TEXTAREA' ||
+      event.target.tagName === 'SELECT'
+    ){
+
+      return;
+    }
+
+
+    /* SPACE */
+
+    if(
+      event.code === 'Space'
+    ){
+
+      event.preventDefault();
+
+      togglePlay();
+
+      return;
+    }
+
+
+    /* RIGHT ARROW */
+
+    if(
+      event.code === 'ArrowRight'
+    ){
+
+      event.preventDefault();
+
+      seek(10);
+
+      return;
+    }
+
+
+    /* LEFT ARROW */
+
+    if(
+      event.code === 'ArrowLeft'
+    ){
+
+      event.preventDefault();
+
+      seek(-10);
+
+      return;
+    }
+
+
+    /* N = NEXT */
+
+    if(
+      event.code === 'KeyN'
+    ){
+
+      nextTrack();
+
+      return;
+    }
+
+
+    /* P = PREVIOUS */
+
+    if(
+      event.code === 'KeyP'
+    ){
+
+      prevTrack();
+
+      return;
+    }
+
+
+    /* M = MUTE */
+
+    if(
+      event.code === 'KeyM'
+    ){
+
+      toggleMute();
+
+      return;
+    }
+
+  }
+);
+
+
+/* ==================================================
+   START YOUTUBE
+================================================== */
+
+loadYouTube();
+
+</script>
+
+</body>
+</html>
